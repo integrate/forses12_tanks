@@ -46,3 +46,12 @@ def game_play_left():
 def game_play_right():
     z = sprite.get_angle(tank2)
     sprite.set_angle(tank2, z + tank2_angle)
+
+
+@wrap.on_key_down(wrap.K_s)
+def game_play_shot():
+    z = sprite.get_angle(tank1)
+    x, y = sprite.get_pos(tank1)
+    bullet = sprite.add('battle_city_items', x, y,'bullet')
+    sprite.set_angle(bullet,z)
+    sprite.move_at_angle_dir(bullet,22)
