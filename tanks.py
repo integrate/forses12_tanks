@@ -5,6 +5,8 @@ wrap.world.create_world(800, 650)
 
 tank1 = sprite.add('battle_city_tanks', 400, 300, 'tank_player_size1_green1')
 tank2 = sprite.add('battle_city_tanks', 300, 400, 'tank_enemy_size1_white1')
+bullet = None
+bullet2 = None
 
 # tank1
 tank1_speed = 5
@@ -50,8 +52,33 @@ def game_play_right():
 
 @wrap.on_key_down(wrap.K_s)
 def game_play_shot():
+    global bullet
     z = sprite.get_angle(tank1)
     x, y = sprite.get_pos(tank1)
-    bullet = sprite.add('battle_city_items', x, y,'bullet')
-    sprite.set_angle(bullet,z)
-    sprite.move_at_angle_dir(bullet,22)
+    bullet = sprite.add('battle_city_items', x, y, 'bullet')
+    sprite.set_angle(bullet, z)
+    sprite.move_at_angle_dir(bullet, 22)
+
+
+@wrap.always()
+def game_play_shot():
+    print(bullet)
+    if bullet != None:
+        sprite.move_at_angle_dir(bullet, 4)
+
+
+@wrap.on_key_down(wrap.K_DOWN)
+def game_play_shot():
+    global bullet2
+    z = sprite.get_angle(tank2)
+    x, y = sprite.get_pos(tank2)
+    bullet2 = sprite.add('battle_city_items', x, y, 'bullet')
+    sprite.set_angle(bullet2, z)
+    sprite.move_at_angle_dir(bullet2, 22)
+
+
+@wrap.always()
+def game_play_shot():
+    print(bullet2)
+    if bullet2 != None:
+        sprite.move_at_angle_dir(bullet2, 4)
