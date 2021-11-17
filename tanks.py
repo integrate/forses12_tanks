@@ -1,20 +1,30 @@
+import time
+
 import wrap
 from wrap import sprite
+import tank
 
 wrap.world.create_world(800, 650)
 
 tank1 = sprite.add('battle_city_tanks', 400, 300, 'tank_player_size1_green1')
 tank2 = sprite.add('battle_city_tanks', 300, 400, 'tank_enemy_size1_white1')
-bullet = None
-bullet2 = None
+
+
+bullets=[]
+
+
+
+
+
 
 # tank1
 tank1_speed = 5
 tank1_angle = 4
+fire_time=time.time()-3
 # tank2
 tank2_speed = 5
 tank2_angle = 3
-
+fire_time2=time.time()-3
 
 @wrap.on_key_always(wrap.K_w)
 def game_play_w():
@@ -23,62 +33,51 @@ def game_play_w():
 
 @wrap.on_key_always(wrap.K_a)
 def game_play_w():
-    z = sprite.get_angle(tank1)
-    sprite.set_angle(tank1, z - tank1_angle)
+    tank.rotate(tank1, -tank1_angle)
+
+
+@wrap.on_key_always(wrap.K_LEFT)
+def game_play_w():
+    tank.rotate(tank2, -tank2_angle)
+
+
+@wrap.on_key_always(wrap.K_RIGHT)
+def game_play_d():
+    tank.rotate(tank2, tank2_angle)
 
 
 @wrap.on_key_always(wrap.K_d)
 def game_play_d():
-    z = sprite.get_angle(tank1)
-    sprite.set_angle(tank1, z + tank1_angle)
+    tank.rotate(tank1, tank1_angle)
 
 
 @wrap.on_key_always(wrap.K_UP)
 def game_play_up():
     sprite.move_at_angle_dir(tank2, tank2_speed)
 
-
-@wrap.on_key_always(wrap.K_LEFT)
-def game_play_left():
-    z = sprite.get_angle(tank2)
-    sprite.set_angle(tank2, z - tank2_angle)
-
-
-@wrap.on_key_always(wrap.K_RIGHT)
-def game_play_right():
-    z = sprite.get_angle(tank2)
-    sprite.set_angle(tank2, z + tank2_angle)
-
-
 @wrap.on_key_down(wrap.K_s)
 def game_play_shot():
-    global bullet
-    z = sprite.get_angle(tank1)
-    x, y = sprite.get_pos(tank1)
-    bullet = sprite.add('battle_city_items', x, y, 'bullet')
-    sprite.set_angle(bullet, z)
-    sprite.move_at_angle_dir(bullet, 22)
-
-
-@wrap.always()
-def game_play_shot():
-    print(bullet)
-    if bullet != None:
-        sprite.move_at_angle_dir(bullet, 4)
-
+    global fire_time
+    tim=time.time()
+    yt=tim-fire_time
+    if yt>=3:
+        bullet=tank.shot(tank1)
+        bullets.append(bullet)
+        print(bullets)
+        fire_time=time.time()
 
 @wrap.on_key_down(wrap.K_DOWN)
 def game_play_shot():
-    global bullet2
-    z = sprite.get_angle(tank2)
-    x, y = sprite.get_pos(tank2)
-    bullet2 = sprite.add('battle_city_items', x, y, 'bullet')
-    sprite.set_angle(bullet2, z)
-    sprite.move_at_angle_dir(bullet2, 22)
-
+    global fire_time2
+    tim = time.time()
+    yt = tim - fire_time2
+    if yt >= 3:
+        bullet2=tank.shot(tank2)
+        bullets.append(bullet2)
+        print(bullets)
+        fire_time2=time.time()
 
 @wrap.always()
 def game_play_shot():
-    print(bullet2)
-    if bullet2 != None:
-        sprite.move_at_angle_dir(bullet2, 4)
+   for b in bullets:
+       sprite.move_at_angle_dir(b,4)
