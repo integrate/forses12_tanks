@@ -1,16 +1,23 @@
 import time
-
 import wrap
 from wrap import sprite
-import tank
+import tank,brick
 
-wrap.world.create_world(800, 650)
+
+wrap.world.create_world(800, 653,)
+wrap.world.set_back_color(0,0,0)
 
 tank1 = sprite.add('battle_city_tanks', 400, 300, 'tank_player_size1_green1')
 tank2 = sprite.add('battle_city_tanks', 300, 400, 'tank_enemy_size1_white1')
 
-bullets = []
+bricks =[]
+brick.add_brick(bricks,200,300)
+brick.add_brick(bricks,232,300)
+brick.add_brick(bricks,264,300)
+brick.add_brick(bricks,296,300)
+brick.add_brick(bricks,328,300)
 
+bullets = []
 bullet2 = None
 bullet = None
 
@@ -27,7 +34,9 @@ fire_time2 = time.time() - 3
 @wrap.on_key_always(wrap.K_w)
 def game_play_w(keys):
     tank.move_tank(tank1, tank1_speed, 'tank_player_size1_green1', 'tank_player_size1_green2')
-
+    for b in bricks:
+        tank.blok(tank1,b)
+    tank.tank_tank(tank1,tank2)
 
 @wrap.on_key_always(wrap.K_a)
 def game_play_w():
@@ -52,6 +61,9 @@ def game_play_d():
 @wrap.on_key_always(wrap.K_UP)
 def game_play_up():
     tank.move_tank(tank2, tank2_speed, 'tank_enemy_size1_white1', 'tank_enemy_size1_white2')
+    for b in bricks:
+        tank.blok(tank2,b)
+    tank.tank_tank(tank1, tank2)
 
 
 @wrap.on_key_down(wrap.K_s)
@@ -83,6 +95,8 @@ def game_play_shot():
 @wrap.always()
 def game_play_shot():
     for b in bullets:
+        for s in bricks:
+            tank.blok(b,s)
         sprite.move_at_angle_dir(b, 10)
         g = sprite.is_collide_sprite(tank1, b)
         f = sprite.is_collide_sprite(tank2, b)
@@ -98,3 +112,8 @@ def game_play_shot():
             sprite.remove(b)
             tank.boom(tank2)
             wrap.sprite.add_text('ПОБЕДА ЗЕЛЁНЫЕ', 299, 315, text_color=[0, 140, 49], font_size=80)
+
+
+
+
+
