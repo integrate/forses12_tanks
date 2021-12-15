@@ -23,3 +23,7 @@ def button (pos_x,pos_y):
 #@wrap.on_mouse_move()
 #def button (pos_x,pos_y):
     #wrap.world.create_world(pos_x+50,pos_y+50)
+
+
+import wrap_py
+wrap_py.app.start()

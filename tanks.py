@@ -11,11 +11,28 @@ tank1 = sprite.add('battle_city_tanks', 400, 300, 'tank_player_size1_green1')
 tank2 = sprite.add('battle_city_tanks', 300, 400, 'tank_enemy_size1_white1')
 
 bricks =[]
-brick.add_brick(bricks,200,300)
-brick.add_brick(bricks,232,300)
-brick.add_brick(bricks,264,300)
-brick.add_brick(bricks,296,300)
-brick.add_brick(bricks,328,300)
+# brick.add_brick(bricks,200,300)
+# brick.add_brick(bricks,232,300)
+# brick.add_brick(bricks,264,300)
+# brick.add_brick(bricks,296,300)
+# brick.add_brick(bricks,328,300)
+for f in range(25):
+    brick.bbrick(bricks,f,0)
+    brick.bbrick(bricks,f,19)
+    brick.bbrick(bricks,0,f)
+    brick.bbrick(bricks,24,f)
+
+brick.ctaf_cteny_vertikil(bricks, 1, 5, 10)
+brick.ctaf_cteny_vertikil(bricks, 3, 3, 5)
+
+brick.ctaf_cteny_gorizont(bricks, 3, 3, 5)
+
+
+
+
+
+
+
 
 bullets = []
 bullet2 = None
@@ -37,6 +54,7 @@ def game_play_w(keys):
     for b in bricks:
         tank.blok(tank1,b)
     tank.tank_tank(tank1,tank2)
+    tank.nop(tank1)
 
 @wrap.on_key_always(wrap.K_a)
 def game_play_w():
@@ -64,7 +82,7 @@ def game_play_up():
     for b in bricks:
         tank.blok(tank2,b)
     tank.tank_tank(tank1, tank2)
-
+    tank.nop(tank2)
 
 @wrap.on_key_down(wrap.K_s)
 def game_play_shot():
@@ -100,7 +118,6 @@ def game_play_shot():
         sprite.move_at_angle_dir(b, 10)
         g = sprite.is_collide_sprite(tank1, b)
         f = sprite.is_collide_sprite(tank2, b)
-        print(g)
         if g == True:
             sprite.remove(b)
             sprite.remove(b)

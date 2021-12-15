@@ -32,7 +32,7 @@ def boom(name):
     time.sleep(0.3)
     sprite.set_costume(z1, 'effect_explosion_big2')
     time.sleep(0.3)
-    sprite.set_costume(z1, 'effect_explosion1')
+    sprite.set_costume(z1,  'effect_explosion1')
     time.sleep(0.3)
     sprite.set_costume(z1, 'effect_explosion2')
     time.sleep(0.3)
@@ -60,3 +60,10 @@ def tank_tank(name1, name2):
     if g:
         boom(name1)
         boom(name2)
+
+
+def nop(name):
+    x,y=sprite.get_pos(name)
+    d=sprite.get_angle(name)
+    if x<=0 or x>=800 or y<=0 or y>=653:
+        sprite.set_angle(name,d+180)
