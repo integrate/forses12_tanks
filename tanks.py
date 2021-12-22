@@ -7,15 +7,19 @@ import tank,brick
 wrap.world.create_world(800, 653,)
 wrap.world.set_back_color(0,0,0)
 
+lazer=tank.add_lazer()
+lazer1=tank.add_lazer()
 tank1 = sprite.add('battle_city_tanks', 400, 300, 'tank_player_size1_green1')
 tank2 = sprite.add('battle_city_tanks', 300, 400, 'tank_enemy_size1_white1')
 
+@wrap.always()
+def lazer2():
+    tank.lazer(tank2,lazer)
+    tank.lazer(tank1,lazer1)
+
+
+
 bricks =[]
-# brick.add_brick(bricks,200,300)
-# brick.add_brick(bricks,232,300)
-# brick.add_brick(bricks,264,300)
-# brick.add_brick(bricks,296,300)
-# brick.add_brick(bricks,328,300)
 for f in range(25):
     brick.bbrick(bricks,f,0)
     brick.bbrick(bricks,f,19)
@@ -26,12 +30,6 @@ brick.ctaf_cteny_vertikil(bricks, 1, 5, 10)
 brick.ctaf_cteny_vertikil(bricks, 3, 3, 5)
 
 brick.ctaf_cteny_gorizont(bricks, 3, 3, 5)
-
-
-
-
-
-
 
 
 bullets = []
@@ -129,6 +127,7 @@ def game_play_shot():
             sprite.remove(b)
             tank.boom(tank2)
             wrap.sprite.add_text('ПОБЕДА ЗЕЛЁНЫЕ', 299, 315, text_color=[0, 140, 49], font_size=80)
+
 
 
 
